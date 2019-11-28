@@ -8,15 +8,15 @@ import pandas as pd
 
 def getManagerData(urls: []):
 
-    managers = []
+    managersList = list()
+    print(urls)
 
     for url in urls:
+        print(url)
         website = requests.get(url + 'html').text
         soup = BeautifulSoup(website,'lxml')
 
         managers = soup.find('table',{'id':'taulaentrenadors'})
-
-
         managers_names = managers.findAll('span', {'class': 'd-none'})
 
         managers_names = str(managers_names)
@@ -28,7 +28,13 @@ def getManagerData(urls: []):
             temp = temp[-1]
             result = temp
 
-        managers.append(result)
+        print(result)
+        managersList.append(result)
 
-    dfManagerData = pd.DataFrame(data={'Manager': managers})
-    dfManagerData.to_csv('managers.csv', sep= ';')
+    print(managersList)
+    if (type(managersList) == []):
+        dfManagerData = pd.DataFrame(data={'Manager': managersList})
+        dfManagerData.to_csv('managers.csv', sep= ';')
+    else:
+        print("Error")
+        print(managersList)
