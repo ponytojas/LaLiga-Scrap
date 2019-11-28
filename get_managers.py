@@ -20,12 +20,8 @@ def getManagerData(url: str):
     result = result.group(1)
 
     if ("<span" in result):
-        print("ouh mamma")
-        temp = result.split('">')
-        print(temp)
+        temp = result.split('left">')
+        temp = temp[-1]
+        result = temp
 
     print(result)
-    print(type(result))
-
-
-
