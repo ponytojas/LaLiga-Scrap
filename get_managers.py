@@ -32,8 +32,8 @@ def getManagerData(urls: []):
         print(result)
         managersList.append(result)
 
-    if not os.path.exists('./data/'):
-        os.makedirs('./data')
+    if not os.path.exists('./data/managers'):
+        os.makedirs('./data/managers/')
 
     dfManagerData = pd.DataFrame(data={'Manager': managersList})
-    dfManagerData.to_csv('./data/managers.csv', sep= ';')
+    dfManagerData.to_csv('./data/managers/managers.csv', sep= ';')

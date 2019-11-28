@@ -9,8 +9,8 @@ import os
 
 def getPlayersData(urls: [], teams: []):
     index = 0
-    if not os.path.exists('./data/'):
-        os.makedirs('./data')
+    if not os.path.exists('./data/teams/'):
+        os.makedirs('./data/teams')
 
     for url in urls:
         playerList = list()
@@ -32,5 +32,5 @@ def getPlayersData(urls: [], teams: []):
         print(playerList)
 
         dfManagerData = pd.DataFrame(data={'Player': playerList})
-        dfManagerData.to_csv('./data/' + teams[index] + '.csv', sep= ';')
+        dfManagerData.to_csv('./data/teams/' + teams[index] + '.csv', sep= ';')
         index += 1
