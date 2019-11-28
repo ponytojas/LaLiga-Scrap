@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
+import os
 
 def getManagerData(urls: []):
 
@@ -31,6 +32,8 @@ def getManagerData(urls: []):
         print(result)
         managersList.append(result)
 
+    if not os.path.exists('./data/'):
+        os.makedirs('./data')
 
     dfManagerData = pd.DataFrame(data={'Manager': managersList})
-    dfManagerData.to_csv('managers.csv', sep= ';')
+    dfManagerData.to_csv('./data/managers.csv', sep= ';')

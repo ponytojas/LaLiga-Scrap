@@ -5,32 +5,32 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
+import os
 
-def getManagerData(urls: [], teams: []):
-
-    managersList = list()
-    print(urls)
+def getPlayersData(urls: [], teams: []):
+    index = 0
+    if not os.path.exists('./data/'):
+        os.makedirs('./data')
 
     for url in urls:
+        playerList = list()
         print(url)
+
         website = requests.get(url + 'html').text
         soup = BeautifulSoup(website,'lxml')
 
-        managers = soup.find('table',{'id':'taulaentrenadors'})
-        managers_names = managers.findAll('span', {'class': 'd-none'})
+        players = soup.find('table',{'id':'taulaplantilla'})
+        
+        playersTemp = players.findAll('span', {'class': 'd-none'})
 
-        managers_names = str(managers_names)
-        result = re.search('">(.*)</' ,managers_names)
-        result = result.group(1)
+        for player in playersTemp:
+            playerName = str(player)
+            result = re.search('">(.*)</' ,playerName)
+            resultPlayer = result.group(1)
+            playerList.append(str(resultPlayer))
 
-        if ("<span" in result):
-            temp = result.split('left">')
-            temp = temp[-1]
-            result = temp
+        print(playerList)
 
-        print(result)
-        managersList.append(result)
-
-    print(managersList)
-    dfManagerData = pd.DataFrame(data={'Manager': managersList})
-    dfManagerData.to_csv('managers.csv', sep= ';')
+        dfManagerData = pd.DataFrame(data={'Player': playerList})
+        dfManagerData.to_csv('./data/' + teams[index] + '.csv', sep= ';')
+        index += 1

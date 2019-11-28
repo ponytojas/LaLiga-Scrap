@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
-import get_managers
+import os
 
 def getTeamsURL():
 
@@ -41,7 +41,10 @@ def getTeamsURL():
         temp_name = re.search('">(.*)</', url)
         names.append(temp_name.group(1))
 
+    if not os.path.exists('./data/'):
+        os.makedirs('./data')
+
     dfTeamsData = pd.DataFrame(data={'URL': urls, 'Team': names})
-    dfTeamsData.to_csv('teams.csv', sep= ';')
+    dfTeamsData.to_csv('./data/teams.csv', sep= ';')
 
     return urls
