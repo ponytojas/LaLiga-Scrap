@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import re
 import pandas as pd
 
-def getManagerData(urls: []):
+def getManagerData(urls: [], teams: []):
 
     managersList = list()
     print(urls)
@@ -31,6 +31,6 @@ def getManagerData(urls: []):
         print(result)
         managersList.append(result)
 
-
+    print(managersList)
     dfManagerData = pd.DataFrame(data={'Manager': managersList})
     dfManagerData.to_csv('managers.csv', sep= ';')
